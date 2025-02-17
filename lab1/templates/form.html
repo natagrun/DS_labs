@@ -1,110 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Форма ввода данных</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+    <title>Форма</title>
 
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            text-align: center; /* Центрируем содержимое внутри контейнера */
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            text-align: left; /* Выравниваем текст влево */
-        }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="email"],
-        input[type="msisdn"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        input[type="submit"] {
-            background-color: #C02E61;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #B02E61;
-        }
-
-        .error {
-            color: red;
-            margin-bottom: 10px;
-            text-align: left;
-        }
-
-        .error ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .error li {
-            margin-bottom: 5px;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Введите ваши данные:</h1>
+
+    <form method="POST">
+        <h1>Введите данные:</h1>
         {% if errors %}
             <div class="error">
-                <p>Пожалуйста, исправьте следующие ошибки:</p>
-                <ul>
-                    {% for error in errors.values() %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
+                {% for error in errors.values() %}
+                    <p>{{ error }}</p>
+                {% endfor %}
             </div>
         {% endif %}
-        <form method="POST">
-            <label for="name">Имя:</label>
-            <input type="text" id="name" name="name"><br>
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name">
 
-            <label for="age">Возраст:</label>
-            <input type="number" id="age" name="age"><br>
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" name="age">
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
 
-            <br><label for="email">Номер телефона(Начинается на +7):</label>
-            <input type="text" id="msisdn" name="msisdn"><br>
+        <label for="msisdn">Телефон (+7):</label>
+        <input type="text" id="msisdn" name="msisdn">
 
-            <input type="submit" value="Отправить">
-        </form>
-    </div>
+        <button type="submit">Отправить</button>
+    </form>
+
 </body>
 </html>
