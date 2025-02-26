@@ -1,0 +1,87 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Автодополнение</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #search-container {
+            position: relative;
+        }
+        #search-input {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+        }
+        #suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            z-index: 1; /* Чтобы подсказки были поверх других элементов */
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #suggestions li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        #suggestions li:hover {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Автодополнение</h1>
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Введите текст...">
+        <ul id="suggestions"></ul>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const suggestionsList = document.getElementById('suggestions');
+
+        searchInput.addEventListener('input', async function() {
+            const query = this.value;
+
+            // Очищаем предыдущие предложения
+            suggestionsList.innerHTML = '';
+
+            if (query.length >= 2) { // Начинаем автодополнение после ввода 2 символов
+                try {
+                    const response = await fetch(`/autocomplete?query=${query}`);
+                    const data = await response.json();
+
+                    data.forEach(suggestion => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = suggestion;
+                        listItem.addEventListener('click', function() {
+                            searchInput.value = suggestion; // Заполняем поле ввода при клике
+                            suggestionsList.innerHTML = ''; // Скрываем предложения
+                        });
+                        suggestionsList.appendChild(listItem);
+                    });
+                } catch (error) {
+                    console.error('Ошибка при получении предложений:', error);
+                }
+            }
+        });
+
+        // Скрытие предложений при клике вне поля ввода
+        document.addEventListener('click', function(event) {
+            if (!searchInput.contains(event.target) && !suggestionsList.contains(event.target)) {
+                suggestionsList.innerHTML = '';
+            }
+        });
+
+
+    </script>
+</body>
+</html>
