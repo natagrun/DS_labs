@@ -1,23 +1,20 @@
 import streamlit as st
 import requests
 
-# Базовый URL сервера
 BASE_URL = 'http://localhost:5000'
 
-# Заголовок страницы
 st.title("Управление людьми")
 
-# Функция для получения списка людей
 def get_persons():
     try:
         response = requests.get(f'{BASE_URL}/persons')
-        response.raise_for_status()  # Проверка на ошибки HTTP
-        return response.json()  # Возвращаем JSON-ответ
+        response.raise_for_status()
+        return response.json()
     except requests.exceptions.RequestException as e:
         st.error(f"Ошибка при выполнении GET-запроса: {e}")
         return []
 
-# Функция для добавления нового человека
+
 def add_person(name, surname, email, age):
     data = {
         'name': name,
@@ -27,12 +24,12 @@ def add_person(name, surname, email, age):
     }
     try:
         response = requests.post(f'{BASE_URL}/persons', json=data)
-        response.raise_for_status()  # Проверка на ошибки HTTP
+        response.raise_for_status()
         st.success(response.json().get('message', 'Человек успешно добавлен!'))
     except requests.exceptions.RequestException as e:
         st.error(f"Ошибка при выполнении POST-запроса: {e}")
 
-# Форма для добавления нового человека
+
 with st.form("add_person_form"):
     st.write("Добавить нового человека")
     name = st.text_input("Имя")
@@ -46,7 +43,7 @@ with st.form("add_person_form"):
         else:
             st.warning("Все поля должны быть заполнены!")
 
-# Кнопка для получения списка людей
+
 if st.button("Получить список людей"):
     persons = get_persons()
     if persons:

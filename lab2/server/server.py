@@ -4,21 +4,21 @@ from psycopg2 import sql
 
 app = Flask(__name__)
 
-# Параметры подключения к PostgreSQL
+
 DB_CONFIG = {
-    'dbname': 'users',  # Название вашей базы данных
-    'user': 'server',        # Имя пользователя
-    'password': 'server',    # Пароль
-    'host': 'localhost',            # Хост (обычно localhost)
-    'port': '5432'                  # Порт (по умолчанию 5432)
+    'dbname': 'users',
+    'user': 'server',
+    'password': 'server',
+    'host': 'localhost',
+    'port': '5432'
 }
 
-# Функция для подключения к базе данных
+
 def get_db_connection():
     conn = psycopg2.connect(**DB_CONFIG)
     return conn
 
-# Маршрут для обработки GET-запроса (получение всех записей из таблицы person)
+
 @app.route('/persons', methods=['GET'])
 def get_persons():
     conn = get_db_connection()
@@ -29,7 +29,7 @@ def get_persons():
     conn.close()
     return jsonify(persons)
 
-# Маршрут для обработки POST-запроса (добавление новой записи в таблицу person)
+
 @app.route('/persons', methods=['POST'])
 def add_person():
     data = request.get_json()
@@ -60,6 +60,6 @@ def add_person():
         conn.close()
         return jsonify({'error': str(e)}), 500
 
-# Запуск сервера
+
 if __name__ == '__main__':
     app.run(debug=True)
