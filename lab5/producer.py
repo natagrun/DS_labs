@@ -1,4 +1,5 @@
 import pika
+import sys 
 
 def send_message(message):
     # Подключение к локальному RabbitMQ
@@ -20,4 +21,10 @@ def send_message(message):
     connection.close()
 
 if __name__ == "__main__":
-    send_message("Hello, Message-Driven Bean!")
+    if len(sys.argv) < 2:
+        print("Usage: python producer.py '<your_message>'")
+        sys.exit(1)
+    
+    # Объединяем все аргументы (на случай, если сообщение содержит пробелы)
+    message = ' '.join(sys.argv[1:])
+    send_message(message)

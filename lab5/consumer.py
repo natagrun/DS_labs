@@ -2,7 +2,6 @@ import pika
 
 def callback(ch, method, properties, body):
     print(f" [x] Received {body}")
-    # Здесь может быть ваша бизнес-логика обработки сообщения
 
 def start_consumer():
     # Подключение к RabbitMQ
