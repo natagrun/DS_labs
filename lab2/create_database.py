@@ -3,7 +3,7 @@ from psycopg2 import Error
 try:
     connection = psycopg2.connect(user="postgres",
                                       password="postgres",
-                                      host="127.0.0.1",
+                                      host="192.168.56.101",
                                       port="5432")
     cursor = connection.cursor()
     connection.autocommit=True
@@ -28,7 +28,7 @@ finally:
 try:
     connection = psycopg2.connect(dbname = "users",user="postgres",
                                   password="postgres",
-                                  host="127.0.0.1",
+                                  host="192.168.56.101",
                                   port="5432")
     cursor = connection.cursor()
     connection.autocommit = True

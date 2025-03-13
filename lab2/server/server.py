@@ -9,7 +9,7 @@ DB_CONFIG = {
     'dbname': 'users',
     'user': 'server',
     'password': 'server',
-    'host': 'localhost',
+    'host': '192.168.56.101',
     'port': '5432'
 }
 
